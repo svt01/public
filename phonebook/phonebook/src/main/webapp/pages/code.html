@@ -1,0 +1,19 @@
+<hr>
+<h1>Code</h1>
+<hr>
+<h5>{{message}}</h5>
+<div ng-controller="WelcomeController">
+		<h3>Simple Controller to display the message</h3>
+		<i>{{message}}</i>
+		<script src="app.js"></script>
+		<hr>
+	</div>
+
+	<div ng-controller="CaseController">
+		<h3>Case Controller - Post call to /toUpperCase </h3>
+		Guest Name : <input type="text" ng-model = "guestName"> <br>
+		<input type="submit" ng-click="callUpperCase()"> 
+		<script src="app.js"></script><br>
+		<i>{{upperCaseText}}</i>
+		<hr>
+	</div>
