@@ -6,7 +6,6 @@ The springboot project has to define the web dependency for the webpages to work
 
 Following steps were used in order to provide an angularjs interface
 
-Download the [phonebook.zip](/phonebook.zip)
 
 ## Project Structure:
 ![Project structure](project_structure.png)
