@@ -22,10 +22,25 @@ public class PhonebookAppController {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
-		System.out.println("\n\n\t\tCalled toUppercase :: "
-				+ (guest != null ? guest.getGuestName() : "NULL"));
-		return PhonebookResponse.constructSuccessResponse(getProperCase(guest));
+		printJsonValue(guest);
+		// System.out.println("\n\n\t\tCalled toUppercase :: "
+		// + (guest != null ? guest.getGuestName() : "NULL"));
+		PhonebookResponse constructSuccessResponse = PhonebookResponse
+				.constructSuccessResponse(getProperCase(guest));
+		printJsonValue(constructSuccessResponse);
+		return constructSuccessResponse;
 
+	}
+
+	private void printJsonValue(Object object) {
+		ObjectMapper om = new ObjectMapper();
+		try {
+			System.out.println(om.writerWithDefaultPrettyPrinter()
+					.writeValueAsString(object));
+		} catch (JsonProcessingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private String getProperCase(GuestRequest guest) {
@@ -37,7 +52,7 @@ public class PhonebookAppController {
 			sb.append(" ").append(String.valueOf(s.charAt(0)).toUpperCase())
 					.append(s.substring(1));
 		}
-		System.out.println("\n\n\t\t" + sb.toString().trim());
+		//System.out.println("\n\n\t\t" + sb.toString().trim());
 		return sb.toString().trim();
 	}
 }
