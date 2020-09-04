@@ -1,6 +1,8 @@
 
 package com.simplifly.demo.phonebook.response;
 
+import java.util.HashMap;
+
 public class PhonebookResponse {
 	private String status;
 	private String errorMessage;
@@ -14,6 +16,7 @@ public class PhonebookResponse {
 	}
 
 	public static PhonebookResponse constructSuccessResponse(Object responseData) {
+		
 		return new PhonebookResponse("SUCCESS", "", responseData);
 	}
 

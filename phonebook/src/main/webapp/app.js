@@ -43,7 +43,8 @@ angular.module('phonebookApp',['ngRoute'])
 			data: {'guestName' : $scope.guestName }
 		}).then(
 			function (response){
-				dataService.set(response.data.responseData);
+				//Success 
+				dataService.set(response.data.status+" "+response.data.responseData);
 				$scope.upperCaseText=response.data.responseData;
 				location.href="#!/home";
 			},

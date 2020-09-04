@@ -9,6 +9,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.simplifly.demo.phonebook.request.GuestRequest;
 import com.simplifly.demo.phonebook.response.PhonebookResponse;
 
+/**
+ * This is a controller class to handle phonebook app requests
+ * @author sagarvt
+ *
+ */
 @RestController
 public class PhonebookAppController {
 
@@ -23,15 +28,23 @@ public class PhonebookAppController {
 			e.printStackTrace();
 		}
 		printJsonValue(guest);
-		// System.out.println("\n\n\t\tCalled toUppercase :: "
-		// + (guest != null ? guest.getGuestName() : "NULL"));
+		
+		String properCase = getProperCase(guest);
+
+		// String response
 		PhonebookResponse constructSuccessResponse = PhonebookResponse
-				.constructSuccessResponse(getProperCase(guest));
+				.constructSuccessResponse(new String[] {properCase});
+
+
 		printJsonValue(constructSuccessResponse);
 		return constructSuccessResponse;
 
 	}
 
+	/**
+	 * This method prints JSON representation
+	 * @param object
+	 */
 	private void printJsonValue(Object object) {
 		ObjectMapper om = new ObjectMapper();
 		try {
@@ -52,7 +65,7 @@ public class PhonebookAppController {
 			sb.append(" ").append(String.valueOf(s.charAt(0)).toUpperCase())
 					.append(s.substring(1));
 		}
-		//System.out.println("\n\n\t\t" + sb.toString().trim());
+		// System.out.println("\n\n\t\t" + sb.toString().trim());
 		return sb.toString().trim();
 	}
 }
