@@ -1,14 +1,35 @@
-var app = angular.module('phonebookApp',['ngRoute'])
+angular.module('phonebookApp',['ngRoute'])
 
-app.controller('RouteController', function($scope){
+.factory('dataService', function(){
+	var savedData = "";
+	
+	function set(data){
+		savedData = data;
+	}
+	
+	function get(){
+		return savedData;
+	}
+	
+	return {
+		set: set,
+		get: get
+	}
+})
+.controller('RouteController', function($scope){
 	$scope.routemessage = 'The RouteController';
+})
+
+.controller('HomeController', function($scope, dataService){
+	$scope.routemessage = 'The HomeController';
+	$scope.upperCaseText = dataService.get();
 })
 
 .controller('WelcomeController', function($scope){
 	$scope.message = 'Hello From the WelcomeController';
 })
 
-.controller('CaseController', function($scope, $http){
+.controller('CaseController', function($scope, $http, dataService){
 	$scope.upperCaseText='in ng-controller : CaseController';
 	
 	$scope.callUpperCase = function(){
@@ -22,8 +43,9 @@ app.controller('RouteController', function($scope){
 			data: {'guestName' : $scope.guestName }
 		}).then(
 			function (response){
+				dataService.set(response.data.responseData);
 				$scope.upperCaseText=response.data.responseData;
-				//location.href="#!/home";
+				location.href="#!/home";
 			},
 			function (response){
 				console.log('Error occurred ')
@@ -46,7 +68,7 @@ app.controller('RouteController', function($scope){
 		})
 		.when('/home',{
 			templateUrl : 'pages/home.html',
-			controller : 'RouteController'
+			controller : 'HomeController'
 		})
 		.when('/dashboard',{
 			templateUrl : 'pages/dashboard.html',
