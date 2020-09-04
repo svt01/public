@@ -11,6 +11,7 @@ import com.simplifly.demo.phonebook.response.PhonebookResponse;
 
 /**
  * This is a controller class to handle phonebook app requests
+ * 
  * @author sagarvt
  *
  */
@@ -19,22 +20,18 @@ public class PhonebookAppController {
 
 	@PostMapping(value = "/toUpperCase", consumes = "application/json",
 			produces = "application/json")
-	public PhonebookResponse toUppercase(@RequestBody String data) {
-		ObjectMapper om = new ObjectMapper();
-		GuestRequest guest = null;
-		try {
-			guest = om.readValue(data, GuestRequest.class);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		printJsonValue(guest);
+	public PhonebookResponse toUppercase(@RequestBody String jsonString) {
 		
-		String properCase = getProperCase(guest);
+		GuestRequest guestObject = (GuestRequest) getClassObject(jsonString,
+				GuestRequest.class);
+		
+		//Logic
+		printJsonValue(guestObject);
+		String properCase = getProperCase(guestObject);
 
 		// String response
 		PhonebookResponse constructSuccessResponse = PhonebookResponse
-				.constructSuccessResponse(new String[] {properCase});
-
+				.constructSuccessResponse(properCase);
 
 		printJsonValue(constructSuccessResponse);
 		return constructSuccessResponse;
@@ -42,7 +39,25 @@ public class PhonebookAppController {
 	}
 
 	/**
+	 * This method returns an object from a json string
+	 * @param jsonString
+	 * @param classType
+	 * @return
+	 */
+	private Object getClassObject(String jsonString, Class<?> classType) {
+		ObjectMapper om = new ObjectMapper();
+		Object guest = null;
+		try {
+			guest = om.readValue(jsonString, classType);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return guest;
+	}
+
+	/**
 	 * This method prints JSON representation
+	 * 
 	 * @param object
 	 */
 	private void printJsonValue(Object object) {
