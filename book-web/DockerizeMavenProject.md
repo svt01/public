@@ -1,5 +1,5 @@
 
-### Steps to dockerize tha Maven project
+### Steps to dockerize the Maven project
 
 1. Create a simple Spring-Boot application
 
