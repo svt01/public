@@ -1,0 +1,22 @@
+logging:
+  org:
+    springframework: debug
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: service-1-route
+          uri: ${SERVICE_1_URL:http://localhost:9001}
+          predicates:
+            - Path=/service-one/**
+          filters:
+            - AddRequestHeader=X-Tenant,acme
+            - AddResponseHeader=X-Type,microservice
+            - AddRequestHeader=X-Owner,sagar
+            - name: Retry
+              args:
+                retries: 3
+                methods: GET
+                backoff:
+                  firstBackoff: 50ms
+                  maxBackoff: 500ms
